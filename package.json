@@ -8,7 +8,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.8.1",
+    "@types/react-redux": "^7.1.23",
     "@vanilla-extract/css": "^1.6.8",
+    "@vanilla-extract/vite-plugin": "^3.1.4",
     "prettier": "2.6.2",
     "react": "^17.0.2",
     "react-beautiful-dnd": "^13.1.0",

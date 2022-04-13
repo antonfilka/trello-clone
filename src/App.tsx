@@ -1,7 +1,7 @@
 import "./App.css";
 
-function App() {
-  return <div className="App">Trello applicaton</div>;
-}
+const App = () => {
+  return <div className="App">Trello application</div>;
+};
 
 export default App;
