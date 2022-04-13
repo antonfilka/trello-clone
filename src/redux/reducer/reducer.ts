@@ -1,10 +1,10 @@
 import { combineReducers } from "@reduxjs/toolkit";
-import { boardsReducer } from "../slices/boardsSlice";
-import { loggerReducer } from "../slices/loggerSlice";
+import { boards } from "../slices/boardsSlice";
+import { logger } from "../slices/loggerSlice";
 
 const reducer = {
-  loggerReducer,
-  boardsReducer,
+  logger,
+  boards,
 };
 
 export default reducer;

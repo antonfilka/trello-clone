@@ -1,32 +1,31 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { board } from "../../types/types";
-
-type addBoardPayload = {
-  boardItem: board;
-};
+import { board, list } from "../../types/types";
 
 type removeBoardPayload = {
   boardId: number;
 };
 
-type boardsState = {
+type addListPayload = {
+  boardId: number;
+  listItem: list;
+};
+
+export type boardsState = {
   boardArray: board[];
 };
 
-const initialState = {
+const initialState: boardsState = {
   boardArray: [],
 };
 
 const boardsSlice = createSlice({
   name: "boards",
-  initialState: initialState,
+  initialState,
   reducers: {
-    addBoard: (
-      state: boardsState,
-      { payload }: PayloadAction<addBoardPayload>
-    ) => {
-      state.boardArray.push(payload.boardItem);
+    addBoard: (state: boardsState, { payload }: PayloadAction<board>) => {
+      state.boardArray.push({ ...payload });
     },
+
     removeBoard: (
       state: boardsState,
       { payload }: PayloadAction<removeBoardPayload>
@@ -36,5 +35,5 @@ const boardsSlice = createSlice({
   },
 });
 
-export const boardsReducer = boardsSlice.reducer;
+export const boards = boardsSlice.reducer;
 export const { addBoard, removeBoard } = boardsSlice.actions;

@@ -1,7 +1,11 @@
-import "./App.css";
+import TrelloList from "./components/TrelloList/TrelloList";
 
 const App = () => {
-  return <div className="App">Trello application</div>;
+  return (
+    <div>
+      <TrelloList />
+    </div>
+  );
 };
 
 export default App;
