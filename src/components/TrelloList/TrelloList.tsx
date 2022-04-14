@@ -2,11 +2,12 @@ import React from "react";
 import { list } from "../../types/types";
 import TrelloActionButton from "../TrelloActionButton/TrelloActionButton";
 import TrelloTask from "../TrelloTask/TrelloTask";
-import { listWrapper, name } from "./TrelloList.css";
+import { deleteButton, header, listWrapper, name } from "./TrelloList.css";
 import { Droppable } from "react-beautiful-dnd";
 import { useTypedDispatch } from "../../hooks/reduxHooks";
-import { setModalActive } from "../../redux/slices/boardsSlice";
+import { deleteList, setModalActive } from "../../redux/slices/boardsSlice";
 import { setModalData } from "../../redux/slices/modalSlice";
+import { GrSubtract } from "react-icons/gr";
 
 interface TrelloListProps {
   boardId: string;
@@ -21,6 +22,7 @@ interface handleTaskChangeProps {
 
 const TrelloList: React.FC<TrelloListProps> = ({ boardId, list }) => {
   const dispatch = useTypedDispatch();
+
   const handleTaskChange = (
     boardId: string,
     listId: string,
@@ -31,6 +33,10 @@ const TrelloList: React.FC<TrelloListProps> = ({ boardId, list }) => {
     dispatch(setModalActive(true));
   };
 
+  const handleListDelete = (listId: string) => {
+    dispatch(deleteList({ boardId, listId }));
+  };
+
   return (
     <Droppable droppableId={list.listId}>
       {provided => (
@@ -39,7 +45,13 @@ const TrelloList: React.FC<TrelloListProps> = ({ boardId, list }) => {
           ref={provided.innerRef}
           className={listWrapper}
         >
-          <div className={name}>{list.listName}</div>
+          <div className={header}>
+            <div className={name}>{list.listName}</div>
+            <GrSubtract
+              className={deleteButton}
+              onClick={() => handleListDelete(list.listId)}
+            />
+          </div>
           {list.taskArray.map((task, index) => (
             <div
               onClick={() =>

@@ -40,6 +40,7 @@ const SideForm: React.FC<SideFormProps> = ({ setFormOpen }) => {
         onBlur={handleOnBlur}
         className={input}
         onChange={handleTextChange}
+        placeholder="Enter new board name"
       />
       <FiCheck className={icon} onMouseDown={handleAddBoard} />
     </div>

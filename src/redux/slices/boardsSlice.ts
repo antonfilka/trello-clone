@@ -1,7 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { board, list, task } from "../../types/types";
 
-type deleteAction = {
+type deleteListAction = {
+  boardId: string;
+  listId: string;
+};
+
+type deleteTaskAction = {
   boardId: string;
   listId: string;
   taskId: string;
@@ -179,7 +184,7 @@ const boardsSlice = createSlice({
 
     deleteTask: (
       state: boardsState,
-      { payload }: PayloadAction<deleteAction>
+      { payload }: PayloadAction<deleteTaskAction>
     ) => {
       state.boardArray = state.boardArray.map(board =>
         board.boardId === payload.boardId
@@ -194,6 +199,22 @@ const boardsSlice = createSlice({
                       ),
                     }
                   : list
+              ),
+            }
+          : board
+      );
+    },
+
+    deleteList: (
+      state: boardsState,
+      { payload }: PayloadAction<deleteListAction>
+    ) => {
+      state.boardArray = state.boardArray.map(board =>
+        board.boardId === payload.boardId
+          ? {
+              ...board,
+              listArray: board.listArray.filter(
+                list => list.listId !== payload.listId
               ),
             }
           : board
@@ -218,4 +239,5 @@ export const {
   setModalActive,
   updateTask,
   deleteTask,
+  deleteList,
 } = boardsSlice.actions;

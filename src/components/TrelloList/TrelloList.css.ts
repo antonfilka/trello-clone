@@ -17,3 +17,18 @@ export const name = style({
   fontSize: vars.fontSizing.T3,
   marginBottom: vars.spacing.big2,
 });
+
+export const header = style({
+  display: "flex",
+  alignItems: "center",
+});
+
+export const deleteButton = style({
+  marginLeft: "auto",
+  marginTop: "-15px",
+  marginRight: "5px",
+  cursor: "pointer",
+  ":hover": {
+    opacity: 0.8,
+  },
+});
