@@ -36,6 +36,9 @@ export const boardItem = style({
   borderRadius: 10,
   cursor: "pointer",
   marginRight: vars.spacing.big1,
+  ":hover": {
+    opacity: 0.8,
+  },
 });
 
 export const boardItemActive = style({

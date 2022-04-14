@@ -1,6 +1,15 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { board, list, task } from "../../types/types";
 
+type sortAction = {
+  boardIndex: number;
+  droppableIdStart: string;
+  droppableIdEnd: string;
+  droppableIndexStart: number;
+  droppableIndexEnd: number;
+  draggableId: string;
+};
+
 type addBoardAction = {
   board: board;
 };
@@ -23,27 +32,27 @@ export type boardsState = {
 const initialState: boardsState = {
   boardArray: [
     {
-      boardId: "0",
+      boardId: "board-0",
       boardName: "First board",
       listArray: [
         {
-          listId: "0",
+          listId: "list-0",
           listName: "List 1",
           taskArray: [
             {
-              taskId: " 0",
+              taskId: "task-0",
               taskName: "Task 1",
               taskDescription: "Description",
               taskOwner: "Anton",
             },
             {
-              taskId: "1",
+              taskId: "task-1",
               taskName: "Task 2",
               taskDescription: "Description",
               taskOwner: "Anton",
             },
             {
-              taskId: " 2",
+              taskId: "task-2",
               taskName: "Task 3",
               taskDescription: "Description",
               taskOwner: "Anton",
@@ -51,17 +60,17 @@ const initialState: boardsState = {
           ],
         },
         {
-          listId: "1",
+          listId: "list-1",
           listName: "List 2",
           taskArray: [
             {
-              taskId: "0",
+              taskId: "task-3",
               taskName: "Task 1",
               taskDescription: "Description",
               taskOwner: "Anton",
             },
             {
-              taskId: "1",
+              taskId: "task-4",
               taskName: "Task 2",
               taskDescription: "Description",
               taskOwner: "Anton",
@@ -112,8 +121,30 @@ const boardsSlice = createSlice({
           : board
       );
     },
+    sort: (state: boardsState, { payload }: PayloadAction<sortAction>) => {
+      // same list
+      if (payload.droppableIdStart === payload.droppableIdEnd) {
+        const list: any = state.boardArray[payload.boardIndex].listArray.find(
+          list => payload.droppableIdStart === list.listId
+        );
+        const card = list.taskArray.splice(payload.droppableIndexStart, 1);
+        list?.taskArray.splice(payload.droppableIndexEnd, 0, ...card);
+      }
+
+      // other list
+      if (payload.droppableIdStart !== payload.droppableIdEnd) {
+        const listStart: any = state.boardArray[
+          payload.boardIndex
+        ].listArray.find(list => payload.droppableIdStart === list.listId);
+        const card = listStart.taskArray.splice(payload.droppableIndexStart, 1);
+        const listEnd: any = state.boardArray[
+          payload.boardIndex
+        ].listArray.find(list => payload.droppableIdEnd === list.listId);
+        listEnd.taskArray.splice(payload.droppableIndexEnd, 0, ...card);
+      }
+    },
   },
 });
 
 export const boards = boardsSlice.reducer;
-export const { addBoard, addList, addTask } = boardsSlice.actions;
+export const { addBoard, addList, addTask, sort } = boardsSlice.actions;
