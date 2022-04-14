@@ -1,6 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { board, list, task } from "../../types/types";
 
+type deleteAction = {
+  boardId: string;
+  listId: string;
+  taskId: string;
+};
+
 type sortAction = {
   boardIndex: number;
   droppableIdStart: string;
@@ -26,10 +32,12 @@ type addListAction = {
 };
 
 export type boardsState = {
+  modalActive: boolean;
   boardArray: board[];
 };
 
 const initialState: boardsState = {
+  modalActive: false,
   boardArray: [
     {
       boardId: "board-0",
@@ -143,8 +151,76 @@ const boardsSlice = createSlice({
         listEnd.taskArray.splice(payload.droppableIndexEnd, 0, ...card);
       }
     },
+
+    updateTask: (
+      state: boardsState,
+      { payload }: PayloadAction<addTaskAction>
+    ) => {
+      state.boardArray = state.boardArray.map(board =>
+        board.boardId === payload.boardId
+          ? {
+              ...board,
+              listArray: board.listArray.map(list =>
+                list.listId === payload.listId
+                  ? {
+                      ...list,
+                      taskArray: list.taskArray.map(task =>
+                        task.taskId === payload.task.taskId
+                          ? {
+                              taskId: task.taskId,
+                              taskName: payload.task.taskName,
+                              taskDescription: payload.task.taskDescription,
+                              taskOwner: payload.task.taskOwner,
+                            }
+                          : task
+                      ),
+                    }
+                  : list
+              ),
+            }
+          : board
+      );
+    },
+
+    deleteTask: (
+      state: boardsState,
+      { payload }: PayloadAction<deleteAction>
+    ) => {
+      state.boardArray = state.boardArray.map(board =>
+        board.boardId === payload.boardId
+          ? {
+              ...board,
+              listArray: board.listArray.map(list =>
+                list.listId === payload.listId
+                  ? {
+                      ...list,
+                      taskArray: list.taskArray.filter(
+                        task => task.taskId !== payload.taskId
+                      ),
+                    }
+                  : list
+              ),
+            }
+          : board
+      );
+    },
+
+    setModalActive: (
+      state: boardsState,
+      { payload }: PayloadAction<boolean>
+    ) => {
+      state.modalActive = payload;
+    },
   },
 });
 
 export const boards = boardsSlice.reducer;
-export const { addBoard, addList, addTask, sort } = boardsSlice.actions;
+export const {
+  addBoard,
+  addList,
+  addTask,
+  sort,
+  setModalActive,
+  updateTask,
+  deleteTask,
+} = boardsSlice.actions;
