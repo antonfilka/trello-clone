@@ -8,15 +8,26 @@ import {
   close,
 } from "./DropDownForm.css";
 import { FiX } from "react-icons/fi";
+import { useTypedDispatch } from "../../../hooks/reduxHooks";
+import { addList, addTask } from "../../../redux/slices/boardsSlice";
+import { v4 as uuidv4, v4 } from "uuid";
 
 // TODO add typing for setFormOpen
 
 interface DropDownFormProps {
+  boardId: string;
+  listId: string;
   setFormOpen: any;
   list?: boolean;
 }
 
-const DropDownForm: React.FC<DropDownFormProps> = ({ list, setFormOpen }) => {
+const DropDownForm: React.FC<DropDownFormProps> = ({
+  boardId,
+  listId,
+  list,
+  setFormOpen,
+}) => {
+  const dispatch = useTypedDispatch();
   const [text, setText] = useState("");
 
   const formPlaceholder = list
@@ -29,7 +40,27 @@ const DropDownForm: React.FC<DropDownFormProps> = ({ list, setFormOpen }) => {
   };
 
   const addBbuttonHandler = () => {
-    setFormOpen(false);
+    if (text) {
+      list
+        ? dispatch(
+            addList({
+              boardId,
+              list: { listId: v4(), listName: text, taskArray: [] },
+            })
+          )
+        : dispatch(
+            addTask({
+              boardId,
+              listId,
+              task: {
+                taskId: v4(),
+                taskName: text,
+                taskDescription: "",
+                taskOwner: "Anton",
+              },
+            })
+          );
+    }
   };
 
   const closeButtonHandler = () => {
@@ -48,7 +79,7 @@ const DropDownForm: React.FC<DropDownFormProps> = ({ list, setFormOpen }) => {
         onChange={handleTextChange}
       />
       <div className={buttons}>
-        <button className={button} onClick={addBbuttonHandler}>
+        <button className={button} onMouseDown={addBbuttonHandler}>
           {buttonTitle}
         </button>
         <FiX className={close} onClick={closeButtonHandler} />

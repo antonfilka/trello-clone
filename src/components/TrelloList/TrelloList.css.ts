@@ -1,7 +1,7 @@
 import { style } from "@vanilla-extract/css";
 import { vars } from "../App.css";
 
-export const list = style({
+export const listWrapper = style({
   display: "flex",
   flexDirection: "column",
   marginRight: vars.spacing.listSpacing,

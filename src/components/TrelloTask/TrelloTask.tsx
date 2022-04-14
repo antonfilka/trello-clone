@@ -2,11 +2,13 @@ import React from "react";
 import { container, title, description } from "./TrelloTask.css";
 
 interface TrelloTaskProps {
+  boardId: string;
   taskName: string;
   taskDescription: string;
 }
 
 const TrelloTask: React.FC<TrelloTaskProps> = ({
+  boardId,
   taskName,
   taskDescription,
 }) => {

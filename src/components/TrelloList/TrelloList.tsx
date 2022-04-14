@@ -1,26 +1,27 @@
 import React from "react";
-import { task } from "../../types/types";
+import { list } from "../../types/types";
 import TrelloActionButton from "../TrelloActionButton/TrelloActionButton";
 import TrelloTask from "../TrelloTask/TrelloTask";
-import { list, name } from "./TrelloList.css";
+import { listWrapper, name } from "./TrelloList.css";
 
 interface TrelloListProps {
-  title: string;
-  tasks: task[];
+  boardId: string;
+  list: list;
 }
 
-const TrelloList: React.FC<TrelloListProps> = ({ title, tasks }) => {
+const TrelloList: React.FC<TrelloListProps> = ({ boardId, list }) => {
   return (
-    <div className={list}>
-      <div className={name}>{title}</div>
-      {tasks.map(task => (
+    <div className={listWrapper}>
+      <div className={name}>{list.listName}</div>
+      {list.taskArray.map(task => (
         <TrelloTask
           key={task.taskId}
           taskName={task.taskName}
           taskDescription={task.taskDescription}
+          boardId={boardId}
         />
       ))}
-      <TrelloActionButton />
+      <TrelloActionButton boardId={boardId} listId={list.listId} />
     </div>
   );
 };

@@ -13,6 +13,7 @@ export const vars = createGlobalTheme(":root", {
     darkText: "rgb(24,42,77)",
     secondaryDarkText: "rgb(94,108,132)",
     secondaryDarkTextHover: "rgb(218,219,226)",
+    selectedTab: "rgb(137, 176, 174)",
   },
   fontSizing: {
     T1: "36px",
@@ -44,4 +45,5 @@ export const appContainer = style({
   height: "100vh",
   width: "100vw",
   backgroundColor: vars.color.main,
+  overflow: "hidden",
 });

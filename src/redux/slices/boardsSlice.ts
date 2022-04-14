@@ -1,5 +1,20 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { board, list } from "../../types/types";
+import { board, list, task } from "../../types/types";
+
+type addBoardAction = {
+  board: board;
+};
+
+type addTaskAction = {
+  boardId: string;
+  listId: string;
+  task: task;
+};
+
+type addListAction = {
+  boardId: string;
+  list: list;
+};
 
 export type boardsState = {
   boardArray: board[];
@@ -8,26 +23,27 @@ export type boardsState = {
 const initialState: boardsState = {
   boardArray: [
     {
-      boardId: 0,
+      boardId: "0",
+      boardName: "First board",
       listArray: [
         {
-          listId: 0,
+          listId: "0",
           listName: "List 1",
           taskArray: [
             {
-              taskId: 0,
+              taskId: " 0",
               taskName: "Task 1",
               taskDescription: "Description",
               taskOwner: "Anton",
             },
             {
-              taskId: 1,
+              taskId: "1",
               taskName: "Task 2",
               taskDescription: "Description",
               taskOwner: "Anton",
             },
             {
-              taskId: 2,
+              taskId: " 2",
               taskName: "Task 3",
               taskDescription: "Description",
               taskOwner: "Anton",
@@ -35,17 +51,17 @@ const initialState: boardsState = {
           ],
         },
         {
-          listId: 1,
+          listId: "1",
           listName: "List 2",
           taskArray: [
             {
-              taskId: 0,
+              taskId: "0",
               taskName: "Task 1",
               taskDescription: "Description",
               taskOwner: "Anton",
             },
             {
-              taskId: 1,
+              taskId: "1",
               taskName: "Task 2",
               taskDescription: "Description",
               taskOwner: "Anton",
@@ -61,11 +77,43 @@ const boardsSlice = createSlice({
   name: "boards",
   initialState,
   reducers: {
-    addBoard: (state: boardsState, { payload }: PayloadAction<board>) => {
-      state.boardArray.push({ ...payload });
+    addBoard: (
+      state: boardsState,
+      { payload }: PayloadAction<addBoardAction>
+    ) => {
+      state.boardArray.push(payload.board);
+    },
+
+    addList: (
+      state: boardsState,
+      { payload }: PayloadAction<addListAction>
+    ) => {
+      state.boardArray.map(board =>
+        board.boardId === payload.boardId
+          ? { ...board, listArray: board.listArray.push(payload.list) }
+          : board
+      );
+    },
+
+    addTask: (
+      state: boardsState,
+      { payload }: PayloadAction<addTaskAction>
+    ) => {
+      state.boardArray.map(board =>
+        board.boardId === payload.boardId
+          ? {
+              ...board,
+              listArray: board.listArray.map(list =>
+                list.listId === payload.listId
+                  ? { ...list, taskArray: list.taskArray.push(payload.task) }
+                  : list
+              ),
+            }
+          : board
+      );
     },
   },
 });
 
 export const boards = boardsSlice.reducer;
-export const { addBoard } = boardsSlice.actions;
+export const { addBoard, addList, addTask } = boardsSlice.actions;

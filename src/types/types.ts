@@ -1,23 +1,24 @@
 export interface task {
-  taskId: number;
+  taskId: string;
   taskName: string;
   taskDescription: string;
   taskOwner: string;
 }
 
 export interface list {
-  listId: number;
+  listId: string;
   listName: string;
   taskArray: task[];
 }
 
 export interface board {
-  boardId: number;
+  boardId: string;
+  boardName: string;
   listArray: list[];
 }
 
 export interface logItem {
-  logId: number;
+  logId: string;
   logAuthor: string;
   logMessage: string;
   logTimestamp: string;
