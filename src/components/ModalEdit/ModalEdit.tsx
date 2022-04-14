@@ -32,12 +32,7 @@ const ModalEdit = () => {
       updateTask({
         boardId: editingState.boardId,
         listId: editingState.listId,
-        task: {
-          taskId: editingState.task.taskId,
-          taskName: data.task.taskName,
-          taskDescription: data.task.taskDescription,
-          taskOwner: data.task.taskOwner,
-        },
+        task: data.task,
       })
     );
     dispatch(setModalActive(false));

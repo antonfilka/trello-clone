@@ -166,12 +166,7 @@ const boardsSlice = createSlice({
                       ...list,
                       taskArray: list.taskArray.map(task =>
                         task.taskId === payload.task.taskId
-                          ? {
-                              taskId: task.taskId,
-                              taskName: payload.task.taskName,
-                              taskDescription: payload.task.taskDescription,
-                              taskOwner: payload.task.taskOwner,
-                            }
+                          ? payload.task
                           : task
                       ),
                     }
