@@ -1,17 +1,19 @@
 import { style } from "@vanilla-extract/css";
+import { vars } from "../App.css";
 
-export const container = style({
+export const list = style({
   display: "flex",
   flexDirection: "column",
-  margin: 20,
-  padding: 20,
-  width: 300,
+  marginRight: vars.spacing.listSpacing,
+  padding: vars.spacing.big2,
+  minWidth: vars.minWidth.list,
+  width: "max-content",
   height: "max-content",
   borderRadius: 20,
-  backgroundColor: "grey",
+  backgroundColor: vars.color.list,
 });
 
-export const T2 = style({
-  fontSize: 32,
-  marginBottom: 15,
+export const name = style({
+  fontSize: vars.fontSizing.T3,
+  marginBottom: vars.spacing.big2,
 });

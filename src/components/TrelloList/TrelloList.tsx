@@ -1,7 +1,8 @@
 import React from "react";
 import { task } from "../../types/types";
+import TrelloActionButton from "../TrelloActionButton/TrelloActionButton";
 import TrelloTask from "../TrelloTask/TrelloTask";
-import { container, T2 } from "./TrelloList.css";
+import { list, name } from "./TrelloList.css";
 
 interface TrelloListProps {
   title: string;
@@ -10,8 +11,8 @@ interface TrelloListProps {
 
 const TrelloList: React.FC<TrelloListProps> = ({ title, tasks }) => {
   return (
-    <div className={container}>
-      <div className={T2}>{title}</div>
+    <div className={list}>
+      <div className={name}>{title}</div>
       {tasks.map(task => (
         <TrelloTask
           key={task.taskId}
@@ -19,6 +20,7 @@ const TrelloList: React.FC<TrelloListProps> = ({ title, tasks }) => {
           taskDescription={task.taskDescription}
         />
       ))}
+      <TrelloActionButton />
     </div>
   );
 };

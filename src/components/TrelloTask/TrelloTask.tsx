@@ -1,5 +1,5 @@
 import React from "react";
-import { container, T2, T4 } from "./TrelloTask.css";
+import { container, title, description } from "./TrelloTask.css";
 
 interface TrelloTaskProps {
   taskName: string;
@@ -12,8 +12,8 @@ const TrelloTask: React.FC<TrelloTaskProps> = ({
 }) => {
   return (
     <div className={container}>
-      <div className={T2}>{taskName}</div>
-      <div className={T4}>{taskDescription}</div>
+      <div className={title}>{taskName}</div>
+      <div className={description}>{taskDescription}</div>
     </div>
   );
 };
