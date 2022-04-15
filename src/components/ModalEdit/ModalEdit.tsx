@@ -17,6 +17,8 @@ import {
   setModalActive,
   updateTask,
 } from "../../redux/slices/boardsSlice";
+import { addLog } from "../../redux/slices/loggerSlice";
+import { v4 } from "uuid";
 
 const ModalEdit = () => {
   const dispatch = useTypedDispatch();
@@ -35,6 +37,14 @@ const ModalEdit = () => {
         task: data.task,
       })
     );
+    dispatch(
+      addLog({
+        logId: v4(),
+        logMessage: `Update task: ${editingState.task.taskName}`,
+        logAuthor: "Anton",
+        logTimestamp: String(Date.now()),
+      })
+    );
     dispatch(setModalActive(false));
   };
 
@@ -44,6 +54,14 @@ const ModalEdit = () => {
         boardId: editingState.boardId,
         listId: editingState.listId,
         taskId: editingState.task.taskId,
+      })
+    );
+    dispatch(
+      addLog({
+        logId: v4(),
+        logMessage: `Delete task: ${editingState.task.taskName}`,
+        logAuthor: "Anton",
+        logTimestamp: String(Date.now()),
       })
     );
     dispatch(setModalActive(false));

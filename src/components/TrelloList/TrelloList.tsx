@@ -8,6 +8,8 @@ import { useTypedDispatch } from "../../hooks/reduxHooks";
 import { deleteList, setModalActive } from "../../redux/slices/boardsSlice";
 import { setModalData } from "../../redux/slices/modalSlice";
 import { GrSubtract } from "react-icons/gr";
+import { addLog } from "../../redux/slices/loggerSlice";
+import { v4 } from "uuid";
 
 interface TrelloListProps {
   boardId: string;
@@ -35,6 +37,14 @@ const TrelloList: React.FC<TrelloListProps> = ({ boardId, list }) => {
 
   const handleListDelete = (listId: string) => {
     dispatch(deleteList({ boardId, listId }));
+    dispatch(
+      addLog({
+        logId: v4(),
+        logMessage: `Delete list: ${list.listName}`,
+        logAuthor: "Anton",
+        logTimestamp: String(Date.now()),
+      })
+    );
   };
 
   return (

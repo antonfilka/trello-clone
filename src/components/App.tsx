@@ -6,6 +6,8 @@ import ListsContainer from "./ListsContainer/ListsContainer";
 import { DragDropContext } from "react-beautiful-dnd";
 import { deleteBoard, sort } from "../redux/slices/boardsSlice";
 import ModalEdit from "./ModalEdit/ModalEdit";
+import { addLog } from "../redux/slices/loggerSlice";
+import { v4 as uuidv4, v4 } from "uuid";
 
 const App = () => {
   const dispatch = useTypedDispatch();
@@ -34,9 +36,19 @@ const App = () => {
   };
 
   const handleDeleteBoard = () => {
-    boards.length > 1
-      ? dispatch(deleteBoard({ boardId: boards[activeBoard].boardId }))
-      : alert("Minimum board amount is 1");
+    if (boards.length > 1) {
+      dispatch(deleteBoard({ boardId: boards[activeBoard].boardId }));
+      dispatch(
+        addLog({
+          logId: v4(),
+          logMessage: `Delete board: ${boards[activeBoard].boardName}`,
+          logAuthor: "Anton",
+          logTimestamp: String(Date.now()),
+        })
+      );
+    } else {
+      alert("Minimum board amount is 1");
+    }
   };
 
   return (

@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { board, list, task } from "../../types/types";
+import { addLog } from "./loggerSlice";
 
 type deleteBoardAction = {
   boardId: string;

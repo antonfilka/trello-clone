@@ -62,7 +62,7 @@ export const deleteBoardButton = style({
   marginBottom: "30px",
   fontSize: vars.fontSizing.T4,
   padding: vars.spacing.big2,
-  backgroundColor: vars.color.deleteButton,
+  backgroundColor: vars.color.mainFaded,
   cursor: "pointer",
   opacity: 0.6,
   ":hover": {

@@ -4,6 +4,7 @@ import { FiCheck } from "react-icons/fi";
 import { useTypedDispatch } from "../../../hooks/reduxHooks";
 import { addBoard } from "../../../redux/slices/boardsSlice";
 import { v4 as uuidv4, v4 } from "uuid";
+import { addLog } from "../../../redux/slices/loggerSlice";
 
 // TODO function typing
 
@@ -20,11 +21,20 @@ const SideForm: React.FC<SideFormProps> = ({ setFormOpen }) => {
   };
 
   const handleAddBoard = () => {
-    text
-      ? dispatch(
-          addBoard({ board: { boardId: v4(), boardName: text, listArray: [] } })
-        )
-      : null;
+    if (text) {
+      dispatch(
+        addBoard({ board: { boardId: v4(), boardName: text, listArray: [] } })
+      );
+      dispatch(
+        addLog({
+          logId: v4(),
+          logMessage: `Create board: ${text}`,
+          logAuthor: "Anton",
+          logTimestamp: String(Date.now()),
+        })
+      );
+    }
+
     setFormOpen(false);
   };
 

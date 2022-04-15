@@ -14,7 +14,7 @@ const loggerSlice = createSlice({
   initialState,
   reducers: {
     addLog: (state: loggerState, { payload }: PayloadAction<logItem>) => {
-      state.logArray.push({ ...payload });
+      state.logArray.splice(0, 0, payload);
     },
   },
 });

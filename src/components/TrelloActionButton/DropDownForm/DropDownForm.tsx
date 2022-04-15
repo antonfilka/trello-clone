@@ -11,6 +11,7 @@ import { FiX } from "react-icons/fi";
 import { useTypedDispatch } from "../../../hooks/reduxHooks";
 import { addList, addTask } from "../../../redux/slices/boardsSlice";
 import { v4 as uuidv4, v4 } from "uuid";
+import { addLog } from "../../../redux/slices/loggerSlice";
 
 // TODO add typing for setFormOpen
 
@@ -41,25 +42,43 @@ const DropDownForm: React.FC<DropDownFormProps> = ({
 
   const addBbuttonHandler = () => {
     if (text) {
-      list
-        ? dispatch(
-            addList({
-              boardId,
-              list: { listId: v4(), listName: text, taskArray: [] },
-            })
-          )
-        : dispatch(
-            addTask({
-              boardId,
-              listId,
-              task: {
-                taskId: v4(),
-                taskName: text,
-                taskDescription: "",
-                taskOwner: "Anton",
-              },
-            })
-          );
+      if (list) {
+        dispatch(
+          addList({
+            boardId,
+            list: { listId: v4(), listName: text, taskArray: [] },
+          })
+        );
+        dispatch(
+          addLog({
+            logId: v4(),
+            logMessage: `Create list: ${text}`,
+            logAuthor: "Anton",
+            logTimestamp: String(Date.now()),
+          })
+        );
+      } else {
+        dispatch(
+          addTask({
+            boardId,
+            listId,
+            task: {
+              taskId: v4(),
+              taskName: text,
+              taskDescription: "",
+              taskOwner: "Anton",
+            },
+          })
+        );
+        dispatch(
+          addLog({
+            logId: v4(),
+            logMessage: `Create task: ${text}`,
+            logAuthor: "Anton",
+            logTimestamp: String(Date.now()),
+          })
+        );
+      }
     }
   };
 
