@@ -12,7 +12,7 @@ const App = () => {
   const [activeBoard, setActiveBoard] = useState(0);
   const modalActive = useTypedSelector(state => state.boards.modalActive);
   const boards = useTypedSelector(state => state.boards.boardArray);
-  const lists = boards[activeBoard].listArray;
+  const lists = boards[activeBoard]?.listArray;
 
   // TODO type
 
