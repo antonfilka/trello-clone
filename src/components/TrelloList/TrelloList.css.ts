@@ -9,7 +9,7 @@ export const listWrapper = style({
   minWidth: vars.minWidth.list,
   width: "max-content",
   height: "max-content",
-  borderRadius: 20,
+  borderRadius: 10,
   backgroundColor: vars.color.list,
 });
 

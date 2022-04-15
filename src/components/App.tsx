@@ -1,22 +1,28 @@
 import { useState } from "react";
 import { useTypedDispatch, useTypedSelector } from "../hooks/reduxHooks";
-import { appContainer, deleteBoardButton } from "./App.css";
+import {
+  appContainer,
+  board,
+  buttons,
+  deleteBoardButton,
+  loggerButton,
+} from "./App.css";
 import BoardList from "./BoardList/BoardList";
 import ListsContainer from "./ListsContainer/ListsContainer";
 import { DragDropContext } from "react-beautiful-dnd";
 import { deleteBoard, sort } from "../redux/slices/boardsSlice";
 import ModalEdit from "./ModalEdit/ModalEdit";
 import { addLog } from "../redux/slices/loggerSlice";
-import { v4 as uuidv4, v4 } from "uuid";
+import { v4 } from "uuid";
+import LogggerModal from "./LogggerModal/LogggerModal";
 
 const App = () => {
   const dispatch = useTypedDispatch();
   const [activeBoard, setActiveBoard] = useState(0);
+  const [loggerOpen, setLoggerOpen] = useState(true);
   const modalActive = useTypedSelector(state => state.boards.modalActive);
   const boards = useTypedSelector(state => state.boards.boardArray);
   const lists = boards[activeBoard]?.listArray;
-
-  // TODO type
 
   const onDragEnd = (result: any) => {
     const { destination, source, draggableId } = result;
@@ -33,6 +39,23 @@ const App = () => {
         draggableId,
       })
     );
+    dispatch(
+      addLog({
+        logId: v4(),
+        logMessage: `Move "${
+          lists
+            .filter(list => list.listId === source.droppableId)[0]
+            .taskArray.filter(task => task.taskId === draggableId)[0].taskName
+        }" from list "${
+          lists.filter(list => list.listId === source.droppableId)[0].listName
+        }" to list "${
+          lists.filter(list => list.listId === destination.droppableId)[0]
+            .listName
+        }"`,
+        logAuthor: "User",
+        logTimestamp: String(Date.now()),
+      })
+    );
   };
 
   const handleDeleteBoard = () => {
@@ -42,34 +65,39 @@ const App = () => {
         addLog({
           logId: v4(),
           logMessage: `Delete board: ${boards[activeBoard].boardName}`,
-          logAuthor: "Anton",
+          logAuthor: "User",
           logTimestamp: String(Date.now()),
         })
       );
+      setActiveBoard(boards.length - 2);
     } else {
       alert("Minimum board amount is 1");
     }
+  };
+
+  const handleOpenLogger = () => {
+    setLoggerOpen(!loggerOpen);
   };
 
   return (
     <div className={appContainer}>
       {modalActive ? <ModalEdit /> : null}
       <BoardList setActiveBoard={setActiveBoard} activeBoard={activeBoard} />
-      {boards ? (
-        <>
-          <DragDropContext onDragEnd={onDragEnd}>
-            <ListsContainer
-              lists={lists}
-              boardId={boards[activeBoard].boardId}
-            />
-          </DragDropContext>
-          <button className={deleteBoardButton} onClick={handleDeleteBoard}>
-            Delete this board
-          </button>
-        </>
-      ) : (
-        <div>No boards, create a new one</div>
-      )}
+      <div className={board}>
+        <DragDropContext onDragEnd={onDragEnd}>
+          <ListsContainer lists={lists} boardId={boards[activeBoard].boardId} />
+        </DragDropContext>
+
+        {loggerOpen ? <LogggerModal /> : null}
+      </div>
+      <div className={buttons}>
+        <button className={deleteBoardButton} onClick={handleDeleteBoard}>
+          Delete this board
+        </button>
+        <button className={loggerButton} onClick={handleOpenLogger}>
+          {loggerOpen ? "Hide activity history" : "Show activity history"}
+        </button>
+      </div>
     </div>
   );
 };

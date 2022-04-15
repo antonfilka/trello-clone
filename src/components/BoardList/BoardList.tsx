@@ -13,8 +13,6 @@ import { useTypedSelector } from "../../hooks/reduxHooks";
 import SideForm from "./SideForm/SideForm";
 import clsx from "clsx";
 
-// TODO types
-
 interface BoardListProps {
   activeBoard: number;
   setActiveBoard: any;

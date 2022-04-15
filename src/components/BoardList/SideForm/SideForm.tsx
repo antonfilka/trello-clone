@@ -6,8 +6,6 @@ import { addBoard } from "../../../redux/slices/boardsSlice";
 import { v4 as uuidv4, v4 } from "uuid";
 import { addLog } from "../../../redux/slices/loggerSlice";
 
-// TODO function typing
-
 interface SideFormProps {
   setFormOpen: any;
 }
@@ -29,7 +27,7 @@ const SideForm: React.FC<SideFormProps> = ({ setFormOpen }) => {
         addLog({
           logId: v4(),
           logMessage: `Create board: ${text}`,
-          logAuthor: "Anton",
+          logAuthor: "User",
           logTimestamp: String(Date.now()),
         })
       );

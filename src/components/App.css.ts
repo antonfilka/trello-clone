@@ -45,11 +45,11 @@ export const vars = createGlobalTheme(":root", {
 export const appContainer = style({
   display: "flex",
   flexDirection: "column",
-  position: "absolute",
   height: "100vh",
   width: "100vw",
   backgroundColor: vars.color.main,
-  overflow: "hidden",
+  overflowY: "hidden",
+  overflowX: "hidden",
 });
 
 export const deleteBoardButton = style({
@@ -58,6 +58,24 @@ export const deleteBoardButton = style({
   width: "max-content",
   marginTop: "auto",
   marginLeft: "auto",
+  marginBottom: "30px",
+  fontSize: vars.fontSizing.T4,
+  padding: vars.spacing.big2,
+  backgroundColor: vars.color.mainFaded,
+  cursor: "pointer",
+  opacity: 0.6,
+  minWidth: 150,
+  ":hover": {
+    opacity: 0.8,
+  },
+});
+
+export const loggerButton = style({
+  border: "none",
+  borderRadius: 5,
+  width: "max-content",
+  marginTop: "auto",
+  marginLeft: "15px",
   marginRight: "30px",
   marginBottom: "30px",
   fontSize: vars.fontSizing.T4,
@@ -65,7 +83,18 @@ export const deleteBoardButton = style({
   backgroundColor: vars.color.mainFaded,
   cursor: "pointer",
   opacity: 0.6,
+  minWidth: 150,
   ":hover": {
     opacity: 0.8,
   },
+});
+
+export const board = style({
+  display: "flex",
+  flexDirection: "row",
+  height: "100%",
+});
+
+export const buttons = style({
+  marginLeft: "auto",
 });

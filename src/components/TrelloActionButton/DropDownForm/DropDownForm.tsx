@@ -13,8 +13,6 @@ import { addList, addTask } from "../../../redux/slices/boardsSlice";
 import { v4 as uuidv4, v4 } from "uuid";
 import { addLog } from "../../../redux/slices/loggerSlice";
 
-// TODO add typing for setFormOpen
-
 interface DropDownFormProps {
   boardId: string;
   listId: string;
@@ -53,7 +51,7 @@ const DropDownForm: React.FC<DropDownFormProps> = ({
           addLog({
             logId: v4(),
             logMessage: `Create list: ${text}`,
-            logAuthor: "Anton",
+            logAuthor: "User",
             logTimestamp: String(Date.now()),
           })
         );
@@ -66,7 +64,7 @@ const DropDownForm: React.FC<DropDownFormProps> = ({
               taskId: v4(),
               taskName: text,
               taskDescription: "",
-              taskOwner: "Anton",
+              taskOwner: "User",
             },
           })
         );
@@ -74,7 +72,7 @@ const DropDownForm: React.FC<DropDownFormProps> = ({
           addLog({
             logId: v4(),
             logMessage: `Create task: ${text}`,
-            logAuthor: "Anton",
+            logAuthor: "User",
             logTimestamp: String(Date.now()),
           })
         );

@@ -41,7 +41,7 @@ const TrelloList: React.FC<TrelloListProps> = ({ boardId, list }) => {
       addLog({
         logId: v4(),
         logMessage: `Delete list: ${list.listName}`,
-        logAuthor: "Anton",
+        logAuthor: "User",
         logTimestamp: String(Date.now()),
       })
     );

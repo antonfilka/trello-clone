@@ -7,7 +7,7 @@ export const container = style({
   alignItems: "center",
   flexWrap: "wrap",
   rowGap: 15,
-  minHeight: 60,
+  minHeight: "max-content",
   padding: vars.spacing.big1,
   backgroundColor: vars.color.mainDarker,
 });
@@ -38,6 +38,7 @@ export const boardItem = style({
   marginRight: vars.spacing.big1,
   ":hover": {
     opacity: 0.8,
+    transform: "scale(1.03)",
   },
 });
 

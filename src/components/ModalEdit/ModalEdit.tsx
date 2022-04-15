@@ -41,7 +41,7 @@ const ModalEdit = () => {
       addLog({
         logId: v4(),
         logMessage: `Update task: ${editingState.task.taskName}`,
-        logAuthor: "Anton",
+        logAuthor: "User",
         logTimestamp: String(Date.now()),
       })
     );
@@ -60,7 +60,7 @@ const ModalEdit = () => {
       addLog({
         logId: v4(),
         logMessage: `Delete task: ${editingState.task.taskName}`,
-        logAuthor: "Anton",
+        logAuthor: "User",
         logTimestamp: String(Date.now()),
       })
     );
