@@ -18,11 +18,9 @@ const App = () => {
 
   const onDragEnd = (result: any) => {
     const { destination, source, draggableId } = result;
-
     if (!destination) {
       return;
     }
-
     dispatch(
       sort({
         boardIndex: activeBoard,

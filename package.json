@@ -2,7 +2,7 @@
   "name": "trello",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://antonfilka.github.io",
+  "homepage": "https://antonfilka.github.io/trello-clone",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
