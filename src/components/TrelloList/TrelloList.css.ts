@@ -24,11 +24,16 @@ export const header = style({
 });
 
 export const deleteButton = style({
+  padding: vars.spacing.small,
+  borderRadius: 20,
+  fontSize: vars.fontSizing.T2,
   marginLeft: "auto",
   marginTop: "-15px",
   marginRight: "5px",
   cursor: "pointer",
   ":hover": {
+    backgroundColor: vars.color.task,
+    boxShadow: vars.shadow.basic,
     opacity: 0.8,
   },
 });

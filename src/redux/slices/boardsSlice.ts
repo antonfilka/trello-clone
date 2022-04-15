@@ -1,6 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { board, list, task } from "../../types/types";
 
+type deleteBoardAction = {
+  boardId: string;
+};
+
 type deleteListAction = {
   boardId: string;
   listId: string;
@@ -221,6 +225,15 @@ const boardsSlice = createSlice({
       );
     },
 
+    deleteBoard: (
+      state: boardsState,
+      { payload }: PayloadAction<deleteBoardAction>
+    ) => {
+      state.boardArray = state.boardArray.filter(
+        board => board.boardId !== payload.boardId
+      );
+    },
+
     setModalActive: (
       state: boardsState,
       { payload }: PayloadAction<boolean>
@@ -240,4 +253,5 @@ export const {
   updateTask,
   deleteTask,
   deleteList,
+  deleteBoard,
 } = boardsSlice.actions;

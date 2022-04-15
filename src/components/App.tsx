@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useTypedDispatch, useTypedSelector } from "../hooks/reduxHooks";
-import { appContainer } from "./App.css";
+import { appContainer, deleteBoardButton } from "./App.css";
 import BoardList from "./BoardList/BoardList";
 import ListsContainer from "./ListsContainer/ListsContainer";
 import { DragDropContext } from "react-beautiful-dnd";
-import { sort } from "../redux/slices/boardsSlice";
+import { deleteBoard, sort } from "../redux/slices/boardsSlice";
 import ModalEdit from "./ModalEdit/ModalEdit";
 
 const App = () => {
@@ -12,6 +12,7 @@ const App = () => {
   const [activeBoard, setActiveBoard] = useState(0);
   const modalActive = useTypedSelector(state => state.boards.modalActive);
   const boards = useTypedSelector(state => state.boards.boardArray);
+  const lists = boards[activeBoard].listArray;
 
   // TODO type
 
@@ -34,16 +35,31 @@ const App = () => {
     );
   };
 
+  const handleDeleteBoard = () => {
+    boards.length > 1
+      ? dispatch(deleteBoard({ boardId: boards[activeBoard].boardId }))
+      : alert("Minimum board amount is 1");
+  };
+
   return (
     <div className={appContainer}>
       {modalActive ? <ModalEdit /> : null}
       <BoardList setActiveBoard={setActiveBoard} activeBoard={activeBoard} />
-      <DragDropContext onDragEnd={onDragEnd}>
-        <ListsContainer
-          lists={boards[activeBoard].listArray}
-          boardId={boards[activeBoard].boardId}
-        />
-      </DragDropContext>
+      {boards ? (
+        <>
+          <DragDropContext onDragEnd={onDragEnd}>
+            <ListsContainer
+              lists={lists}
+              boardId={boards[activeBoard].boardId}
+            />
+          </DragDropContext>
+          <button className={deleteBoardButton} onClick={handleDeleteBoard}>
+            Delete this board
+          </button>
+        </>
+      ) : (
+        <div>No boards, create a new one</div>
+      )}
     </div>
   );
 };

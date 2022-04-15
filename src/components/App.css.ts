@@ -43,9 +43,29 @@ export const vars = createGlobalTheme(":root", {
 });
 
 export const appContainer = style({
+  display: "flex",
+  flexDirection: "column",
   position: "absolute",
   height: "100vh",
   width: "100vw",
   backgroundColor: vars.color.main,
   overflow: "hidden",
+});
+
+export const deleteBoardButton = style({
+  border: "none",
+  borderRadius: 5,
+  width: "max-content",
+  marginTop: "auto",
+  marginLeft: "auto",
+  marginRight: "30px",
+  marginBottom: "30px",
+  fontSize: vars.fontSizing.T4,
+  padding: vars.spacing.big2,
+  backgroundColor: vars.color.deleteButton,
+  cursor: "pointer",
+  opacity: 0.6,
+  ":hover": {
+    opacity: 0.8,
+  },
 });
