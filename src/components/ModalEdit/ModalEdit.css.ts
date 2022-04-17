@@ -8,6 +8,7 @@ export const wrapper = style({
   justifyContent: "center",
   alignItems: "center",
   position: "absolute",
+  zIndex: 1000000,
 });
 
 export const modalWindow = style({

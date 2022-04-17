@@ -62,7 +62,7 @@ const TrelloList: React.FC<TrelloListProps> = ({ boardId, list }) => {
               onClick={() => handleListDelete(list.listId)}
             />
           </div>
-          {list.taskArray.map((task, index) => (
+          {list.tasks.map((task, index) => (
             <div
               onClick={() =>
                 handleTaskChange(boardId, list.listId, task.taskId, task)

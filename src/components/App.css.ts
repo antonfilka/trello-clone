@@ -18,11 +18,11 @@ export const vars = createGlobalTheme(":root", {
     deleteButton: "rgb(237, 51, 88)",
   },
   fontSizing: {
-    T1: "36px",
-    T2: "28px",
-    T3: "22px",
-    T4: "18px",
-    P1: "16px",
+    T1: "32px",
+    T2: "24px",
+    T3: "18px",
+    T4: "14px",
+    P1: "12px",
   },
   spacing: {
     small: "5px",
@@ -38,18 +38,17 @@ export const vars = createGlobalTheme(":root", {
     basic: "4px 4px 8px 0px rgba(34, 60, 80, 0.2)",
   },
   minWidth: {
-    list: "300px",
+    list: "250px",
   },
 });
 
 export const appContainer = style({
   display: "flex",
   flexDirection: "column",
-  height: "100vh",
+  minHeight: "100vh",
+  height: "max-content",
   width: "100vw",
   backgroundColor: vars.color.main,
-  overflowY: "hidden",
-  overflowX: "hidden",
 });
 
 export const deleteBoardButton = style({
@@ -96,5 +95,6 @@ export const board = style({
 });
 
 export const buttons = style({
+  marginTop: "auto",
   marginLeft: "auto",
 });

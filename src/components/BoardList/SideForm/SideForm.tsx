@@ -21,7 +21,7 @@ const SideForm: React.FC<SideFormProps> = ({ setFormOpen }) => {
   const handleAddBoard = () => {
     if (text) {
       dispatch(
-        addBoard({ board: { boardId: v4(), boardName: text, listArray: [] } })
+        addBoard({ board: { boardId: v4(), boardName: text, lists: [] } })
       );
       dispatch(
         addLog({

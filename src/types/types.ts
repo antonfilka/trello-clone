@@ -8,13 +8,13 @@ export interface task {
 export interface list {
   listId: string;
   listName: string;
-  taskArray: task[];
+  tasks: task[];
 }
 
 export interface board {
   boardId: string;
   boardName: string;
-  listArray: list[];
+  lists: list[];
 }
 
 export interface logItem {

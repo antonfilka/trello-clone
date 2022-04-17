@@ -7,8 +7,8 @@ export const container = style({
   alignItems: "center",
   flexWrap: "wrap",
   rowGap: 15,
-  minHeight: "max-content !important",
-  padding: vars.spacing.big1,
+  minHeight: "max-content",
+  padding: vars.spacing.big2,
   backgroundColor: vars.color.mainDarker,
 });
 

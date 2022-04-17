@@ -44,7 +44,7 @@ const DropDownForm: React.FC<DropDownFormProps> = ({
         dispatch(
           addList({
             boardId,
-            list: { listId: v4(), listName: text, taskArray: [] },
+            list: { listId: v4(), listName: text, tasks: [] },
           })
         );
         dispatch(

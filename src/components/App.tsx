@@ -18,20 +18,31 @@ import LogggerModal from "./LogggerModal/LogggerModal";
 
 const App = () => {
   const dispatch = useTypedDispatch();
-  const [activeBoard, setActiveBoard] = useState(0);
+  const [activeBoardId, setActiveBoardId] = useState("board-0");
   const [loggerOpen, setLoggerOpen] = useState(true);
   const modalActive = useTypedSelector(state => state.boards.modalActive);
   const boards = useTypedSelector(state => state.boards.boardArray);
-  const lists = boards[activeBoard]?.listArray;
+
+  const getActiveBoard = boards.filter(
+    board => board.boardId === activeBoardId
+  )[0];
+
+  const lists = getActiveBoard.lists;
 
   const onDragEnd = (result: any) => {
     const { destination, source, draggableId } = result;
+
+    const sourceList = lists.filter(
+      list => list.listId === source.droppableId
+    )[0];
+
     if (!destination) {
       return;
     }
+
     dispatch(
       sort({
-        boardIndex: activeBoard,
+        boardIndex: boards.findIndex(board => board.boardId === activeBoardId),
         droppableIdStart: source.droppableId,
         droppableIdEnd: destination.droppableId,
         droppableIndexStart: source.index,
@@ -39,16 +50,14 @@ const App = () => {
         draggableId,
       })
     );
+
     dispatch(
       addLog({
         logId: v4(),
         logMessage: `Move "${
-          lists
-            .filter(list => list.listId === source.droppableId)[0]
-            .taskArray.filter(task => task.taskId === draggableId)[0].taskName
-        }" from list "${
-          lists.filter(list => list.listId === source.droppableId)[0].listName
-        }" to list "${
+          sourceList.tasks.filter(task => task.taskId === draggableId)[0]
+            .taskName
+        }" from list "${sourceList.listName}" to list "${
           lists.filter(list => list.listId === destination.droppableId)[0]
             .listName
         }"`,
@@ -60,16 +69,27 @@ const App = () => {
 
   const handleDeleteBoard = () => {
     if (boards.length > 1) {
-      dispatch(deleteBoard({ boardId: boards[activeBoard].boardId }));
+      dispatch(deleteBoard({ boardId: getActiveBoard.boardId }));
+
       dispatch(
         addLog({
           logId: v4(),
-          logMessage: `Delete board: ${boards[activeBoard].boardName}`,
+          logMessage: `Delete board: ${getActiveBoard.boardName}`,
           logAuthor: "User",
           logTimestamp: String(Date.now()),
         })
       );
-      setActiveBoard(boards.length - 2);
+
+      const newIndexToSet = () => {
+        const indexToBeDeleted = boards.findIndex(
+          board => board.boardId === activeBoardId
+        );
+        return indexToBeDeleted === 0
+          ? indexToBeDeleted + 1
+          : indexToBeDeleted - 1;
+      };
+
+      setActiveBoardId(boards[newIndexToSet()].boardId);
     } else {
       alert("Minimum board amount is 1");
     }
@@ -82,12 +102,14 @@ const App = () => {
   return (
     <div className={appContainer}>
       {modalActive ? <ModalEdit /> : null}
-      <BoardList setActiveBoard={setActiveBoard} activeBoard={activeBoard} />
+      <BoardList
+        setActiveBoardId={setActiveBoardId}
+        activeBoardId={activeBoardId}
+      />
       <div className={board}>
         <DragDropContext onDragEnd={onDragEnd}>
-          <ListsContainer lists={lists} boardId={boards[activeBoard].boardId} />
+          <ListsContainer lists={lists} boardId={getActiveBoard.boardId} />
         </DragDropContext>
-
         {loggerOpen ? <LogggerModal /> : null}
       </div>
       <div className={buttons}>

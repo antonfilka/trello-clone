@@ -14,13 +14,13 @@ import SideForm from "./SideForm/SideForm";
 import clsx from "clsx";
 
 interface BoardListProps {
-  activeBoard: number;
-  setActiveBoard: any;
+  activeBoardId: string;
+  setActiveBoardId: any;
 }
 
 const BoardList: React.FC<BoardListProps> = ({
-  setActiveBoard,
-  activeBoard,
+  setActiveBoardId,
+  activeBoardId,
 }) => {
   const [formOpen, setFormOpen] = useState(false);
   const boards = useTypedSelector(state => state.boards.boardArray);
@@ -29,8 +29,8 @@ const BoardList: React.FC<BoardListProps> = ({
     setFormOpen(!formOpen);
   };
 
-  const handleChooseBoard = (id: number) => {
-    setActiveBoard(id);
+  const handleChooseBoard = (index: number) => {
+    setActiveBoardId(boards[index].boardId);
   };
 
   return (
@@ -40,10 +40,14 @@ const BoardList: React.FC<BoardListProps> = ({
         <div
           className={clsx(
             {
-              [boardItemActive]: activeBoard === index,
+              [boardItemActive]:
+                boards.findIndex(board => board.boardId === activeBoardId) ===
+                index,
             },
             {
-              [boardItem]: activeBoard !== index,
+              [boardItem]:
+                boards.findIndex(board => board.boardId === activeBoardId) !==
+                index,
             }
           )}
           key={board.boardId}

@@ -52,11 +52,11 @@ const initialState: boardsState = {
     {
       boardId: "board-0",
       boardName: "First board",
-      listArray: [
+      lists: [
         {
           listId: "list-0",
           listName: "List 1",
-          taskArray: [
+          tasks: [
             {
               taskId: "task-0",
               taskName: "Task 1",
@@ -80,7 +80,7 @@ const initialState: boardsState = {
         {
           listId: "list-1",
           listName: "List 2",
-          taskArray: [
+          tasks: [
             {
               taskId: "task-3",
               taskName: "Task 1",
@@ -117,7 +117,7 @@ const boardsSlice = createSlice({
     ) => {
       state.boardArray.map(board =>
         board.boardId === payload.boardId
-          ? { ...board, listArray: board.listArray.push(payload.list) }
+          ? { ...board, lists: board.lists.push(payload.list) }
           : board
       );
     },
@@ -130,9 +130,9 @@ const boardsSlice = createSlice({
         board.boardId === payload.boardId
           ? {
               ...board,
-              listArray: board.listArray.map(list =>
+              lists: board.lists.map(list =>
                 list.listId === payload.listId
-                  ? { ...list, taskArray: list.taskArray.push(payload.task) }
+                  ? { ...list, tasks: list.tasks.push(payload.task) }
                   : list
               ),
             }
@@ -142,23 +142,23 @@ const boardsSlice = createSlice({
     sort: (state: boardsState, { payload }: PayloadAction<sortAction>) => {
       // same list
       if (payload.droppableIdStart === payload.droppableIdEnd) {
-        const list: any = state.boardArray[payload.boardIndex].listArray.find(
+        const list: any = state.boardArray[payload.boardIndex].lists.find(
           list => payload.droppableIdStart === list.listId
         );
-        const card = list.taskArray.splice(payload.droppableIndexStart, 1);
-        list?.taskArray.splice(payload.droppableIndexEnd, 0, ...card);
+        const card = list.tasks.splice(payload.droppableIndexStart, 1);
+        list?.tasks.splice(payload.droppableIndexEnd, 0, ...card);
       }
 
       // other list
       if (payload.droppableIdStart !== payload.droppableIdEnd) {
-        const listStart: any = state.boardArray[
-          payload.boardIndex
-        ].listArray.find(list => payload.droppableIdStart === list.listId);
-        const card = listStart.taskArray.splice(payload.droppableIndexStart, 1);
-        const listEnd: any = state.boardArray[
-          payload.boardIndex
-        ].listArray.find(list => payload.droppableIdEnd === list.listId);
-        listEnd.taskArray.splice(payload.droppableIndexEnd, 0, ...card);
+        const listStart: any = state.boardArray[payload.boardIndex].lists.find(
+          list => payload.droppableIdStart === list.listId
+        );
+        const card = listStart.tasks.splice(payload.droppableIndexStart, 1);
+        const listEnd: any = state.boardArray[payload.boardIndex].lists.find(
+          list => payload.droppableIdEnd === list.listId
+        );
+        listEnd.tasks.splice(payload.droppableIndexEnd, 0, ...card);
       }
     },
 
@@ -170,11 +170,11 @@ const boardsSlice = createSlice({
         board.boardId === payload.boardId
           ? {
               ...board,
-              listArray: board.listArray.map(list =>
+              lists: board.lists.map(list =>
                 list.listId === payload.listId
                   ? {
                       ...list,
-                      taskArray: list.taskArray.map(task =>
+                      tasks: list.tasks.map(task =>
                         task.taskId === payload.task.taskId
                           ? payload.task
                           : task
@@ -195,11 +195,11 @@ const boardsSlice = createSlice({
         board.boardId === payload.boardId
           ? {
               ...board,
-              listArray: board.listArray.map(list =>
+              lists: board.lists.map(list =>
                 list.listId === payload.listId
                   ? {
                       ...list,
-                      taskArray: list.taskArray.filter(
+                      tasks: list.tasks.filter(
                         task => task.taskId !== payload.taskId
                       ),
                     }
@@ -218,9 +218,7 @@ const boardsSlice = createSlice({
         board.boardId === payload.boardId
           ? {
               ...board,
-              listArray: board.listArray.filter(
-                list => list.listId !== payload.listId
-              ),
+              lists: board.lists.filter(list => list.listId !== payload.listId),
             }
           : board
       );
