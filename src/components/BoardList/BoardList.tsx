@@ -51,8 +51,9 @@ const BoardList: React.FC<BoardListProps> = ({
             }
           )}
           key={board.boardId}
+          onClick={() => handleChooseBoard(index)}
         >
-          <div onClick={() => handleChooseBoard(index)}>{board.boardName}</div>
+          {board.boardName}
         </div>
       ))}
       <div className={addSection}>
